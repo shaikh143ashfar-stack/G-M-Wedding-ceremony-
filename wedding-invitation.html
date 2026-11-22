@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wedding Invitation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Great+Vibes&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600&family=Playfair+Display:wght@400;600&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<style>
+:root{--maroon:#4A0404;--burg:#2B0202;--gold:#D4AF37;--bright:#F5D77F;--ivory:#FFFDF7;
+--mandala:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='-80 -80 160 160' fill='none' stroke='%23D4AF37' stroke-opacity='.13'%3E%3Ccircle r='70'/%3E%3Ccircle r='50'/%3E%3Ccircle r='14'/%3E%3Cg%3E%3Cellipse rx='9' ry='30' cy='-40'/%3E%3Cellipse rx='9' ry='30' cy='-40' transform='rotate(45)'/%3E%3Cellipse rx='9' ry='30' cy='-40' transform='rotate(90)'/%3E%3Cellipse rx='9' ry='30' cy='-40' transform='rotate(135)'/%3E%3Cellipse rx='9' ry='30' cy='-40' transform='rotate(180)'/%3E%3Cellipse rx='9' ry='30' cy='-40' transform='rotate(225)'/%3E%3Cellipse rx='9' ry='30' cy='-40' transform='rotate(270)'/%3E%3Cellipse rx='9' ry='30' cy='-40' transform='rotate(315)'/%3E%3C/g%3E%3C/svg%3E")}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(ellipse at top,var(--maroon),var(--burg) 75%) fixed;color:var(--ivory);font-family:'Playfair Display',serif;min-height:100vh;overflow-x:hidden;padding-top:env(safe-area-inset-top,0)}
+body::before{content:"";position:fixed;inset:0;background:var(--mandala) center/160px;pointer-events:none;z-index:0}
+body.locked{overflow:hidden;height:100vh}
+html[lang=hi] body{font-family:'Tiro Devanagari Hindi','Noto Sans Devanagari',serif}
+html[lang=ur] body{font-family:'Noto Nastaliq Urdu',serif;line-height:2.1}
+.fancy{font-family:'Cinzel Decorative',serif}
+html[lang=hi] .fancy,html[lang=hi] .script{font-family:'Tiro Devanagari Hindi',serif}
+html[lang=ur] .fancy,html[lang=ur] .script{font-family:'Noto Nastaliq Urdu',serif}
+.script{font-family:'Great Vibes',cursive}
+.gold{background:linear-gradient(90deg,var(--gold),var(--bright),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+/* language bar */
+.langbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:center;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 8px) 10px 8px;background:rgba(43,2,2,.88);backdrop-filter:blur(6px);border-bottom:1px solid var(--gold);direction:ltr}
+.langbar button{font:600 14px 'Noto Sans Devanagari','Playfair Display',sans-serif;color:var(--bright);background:transparent;border:1px solid var(--gold);border-radius:20px;padding:6px 18px;cursor:pointer;transition:.3s}
+.langbar button.on{background:linear-gradient(135deg,var(--gold),var(--bright));color:var(--burg)}
+main{position:relative;z-index:1;padding-top:64px}
+section{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 18px;text-align:center}
+.card{position:relative;width:100%;max-width:440px;padding:34px 22px;background:linear-gradient(160deg,rgba(74,4,4,.92),rgba(43,2,2,.96));border:2px solid var(--gold);outline:1px solid var(--gold);outline-offset:-10px;border-radius:6px;box-shadow:0 0 40px rgba(212,175,55,.2)}
+.card::before{content:"";position:absolute;inset:0;background:var(--mandala) center/130px;pointer-events:none}
+.card>*{position:relative}
+.sub{color:var(--bright);letter-spacing:.14em;font-size:13px;text-transform:uppercase;margin-bottom:10px}
+html[lang=ur] .sub,html[lang=hi] .sub{letter-spacing:0;text-transform:none;font-size:15px}
+.initials{font-size:34px;margin-bottom:6px}
+h1{font-size:clamp(30px,9vw,44px);line-height:1.25;margin:6px 0 4px;font-weight:400}
+.amp{display:block;font-size:.55em;color:var(--bright)}
+.divider{width:140px;height:2px;margin:16px auto;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+/* scratch */
+.scratch{position:relative;width:min(300px,100%);height:110px;margin:22px auto 10px;border:2px solid var(--gold);border-radius:8px;overflow:hidden;background:var(--ivory);display:flex;align-items:center;justify-content:center}
+.scratch .date{color:var(--maroon);font-size:24px;font-weight:600;padding:0 10px}
+.scratch canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;transition:opacity 1s}
+.scratch canvas.gone{opacity:0;pointer-events:none}
+.scratch .hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--burg);font-weight:600;pointer-events:none;transition:opacity .5s;text-shadow:0 1px 0 rgba(255,255,255,.5)}
+.scratch .hint.gone{opacity:0}
+.countdown{display:none;justify-content:center;gap:10px;margin-top:20px;direction:ltr}
+.countdown.show{display:flex;animation:fade 1.2s}
+.cd{min-width:62px;padding:10px 4px;border:1px solid var(--gold);border-radius:8px;background:rgba(0,0,0,.25)}
+.cd b{display:block;font:700 24px 'Cinzel Decorative',serif;color:var(--bright)}
+.cd span{font-size:11px;color:var(--ivory)}
+html[lang=ur] .cd span,html[lang=hi] .cd span{font-size:13px}
+.ctitle{display:none;margin-top:22px}
+.ctitle.show{display:block}
+/* ceremony */
+.card h2{font-size:22px;margin-bottom:12px;font-weight:700}
+.when{font-size:20px;margin:6px 0;color:var(--bright)}
+.note{margin:16px 0;font-size:15px;line-height:1.8;opacity:.95}
+.person{margin:14px 0}
+.person small{display:block;color:var(--bright);font-size:12px;letter-spacing:.15em;text-transform:uppercase}
+html[lang=ur] .person small,html[lang=hi] .person small{letter-spacing:0;font-size:14px;text-transform:none}
+.person .n{font-size:30px;margin:2px 0}
+.person .p{font-size:16px}
+.venue{font-size:26px;margin:8px 0 6px}
+.addr{font-size:16px;line-height:1.7;margin-bottom:22px}
+.btn{display:inline-block;padding:14px 30px;border-radius:30px;text-decoration:none;font-weight:600;color:var(--burg);background:linear-gradient(135deg,var(--gold),var(--bright),var(--gold));box-shadow:0 0 22px rgba(245,215,127,.45);transition:transform .2s}
+.btn:active{transform:scale(.96)}
+.foot{margin-top:26px;color:var(--bright);font-size:15px}
+/* envelope */
+#intro{position:fixed;inset:0;z-index:100;background:radial-gradient(ellipse at center,var(--maroon),var(--burg));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;transition:opacity 1s}
+#intro::before{content:"";position:absolute;inset:0;background:var(--mandala) center/160px}
+#intro.out{opacity:0;pointer-events:none}
+.envelope{position:relative;width:min(310px,84vw);aspect-ratio:3/2;background:linear-gradient(145deg,#6b0f0f,var(--maroon));border:2px solid var(--gold);outline:1px solid var(--gold);outline-offset:4px;border-radius:4px;cursor:pointer;box-shadow:0 20px 50px rgba(0,0,0,.6);perspective:900px}
+.envelope::after{content:"";position:absolute;inset:0;background:linear-gradient(to top right,transparent 49.5%,rgba(212,175,55,.5) 50%,transparent 50.6%),linear-gradient(to top left,transparent 49.5%,rgba(212,175,55,.5) 50%,transparent 50.6%);clip-path:polygon(0 100%,50% 40%,100% 100%)}
+.flap{position:absolute;top:0;left:0;right:0;height:62%;background:linear-gradient(#7a1212,var(--maroon));clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform 1s ease;z-index:2;border-top:2px solid var(--gold)}
+.envelope.open .flap{transform:rotateX(180deg)}
+.seal{position:absolute;left:50%;top:62%;width:72px;height:72px;margin:-36px 0 0 -36px;border-radius:50%;z-index:3;display:flex;align-items:center;justify-content:center;font:700 17px 'Cinzel Decorative',serif;color:var(--burg);background:radial-gradient(circle at 35% 30%,var(--bright),var(--gold) 60%,#a6811c);box-shadow:0 0 0 3px rgba(212,175,55,.5);animation:pulse 2s infinite;direction:ltr;transition:opacity .5s}
+.envelope.open .seal{opacity:0;animation:none}
+.tap{color:var(--bright);font-size:17px;animation:blink 2s infinite;z-index:1}
+/* particles */
+.fp{position:fixed;bottom:-20px;width:6px;height:6px;border-radius:50%;background:var(--bright);box-shadow:0 0 8px var(--gold);opacity:0;z-index:2;pointer-events:none;animation:rise linear infinite}
+.petal{position:fixed;top:-20px;z-index:200;width:12px;height:16px;border-radius:70% 0 70% 0;pointer-events:none;animation:fall linear forwards}
+.spark{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--bright);box-shadow:0 0 10px var(--gold);pointer-events:none;animation:spark 1s ease-out forwards}
+@keyframes rise{0%{transform:translateY(0);opacity:0}10%{opacity:.8}100%{transform:translateY(-110vh) translateX(30px);opacity:0}}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+@keyframes spark{to{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+@keyframes pulse{50%{box-shadow:0 0 0 12px rgba(212,175,55,0),0 0 28px rgba(245,215,127,.9)}}
+@keyframes blink{50%{opacity:.4}}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}}
+.rv{opacity:0;transform:translateY(24px);transition:1s}
+.rv.in{opacity:1;transform:none}
+</style>
+</head>
+<body class="locked">
+<div class="langbar">
+  <button data-lang="en" class="on">English</button>
+  <button data-lang="hi">हिंदी</button>
+  <button data-lang="ur">اردو</button>
+</div>
+
+<div id="intro">
+  <div class="envelope" id="env"><div class="flap"></div><div class="seal" data-cfg="initials"></div></div>
+  <div class="tap" data-i18n="tap"></div>
+</div>
+
+<main>
+  <section>
+    <div class="sub" data-i18n="together"></div>
+    <div class="initials fancy gold" data-cfg="initials"></div>
+    <div class="divider"></div>
+    <h1 class="script gold"><span data-cfg="groomName"></span><span class="amp" data-i18n="and"></span><span data-cfg="brideName"></span></h1>
+    <div class="divider"></div>
+    <div class="sub" data-i18n="scratchTitle"></div>
+    <div class="scratch" id="scratch">
+      <div class="date fancy" data-cfg="weddingDateText"></div>
+      <canvas id="foil"></canvas>
+      <div class="hint" id="hint" data-i18n="scratchHint"></div>
+    </div>
+    <div class="sub ctitle" id="ctitle" data-i18n="countdownTitle"></div>
+    <div class="countdown" id="cd">
+      <div class="cd"><b id="d">00</b><span data-i18n="days"></span></div>
+      <div class="cd"><b id="h">00</b><span data-i18n="hours"></span></div>
+      <div class="cd"><b id="m">00</b><span data-i18n="mins"></span></div>
+      <div class="cd"><b id="s">00</b><span data-i18n="secs"></span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card rv">
+      <div class="sub" data-i18n="nikahTag"></div>
+      <h2 class="fancy gold" data-i18n="ceremony"></h2>
+      <div class="divider"></div>
+      <div class="when" data-cfg="weddingDateText"></div>
+      <div class="when" data-cfg="weddingDayAndTime"></div>
+      <p class="note" data-cfg="weddingNote"></p>
+      <div class="divider"></div>
+      <div class="person"><small data-i18n="groom"></small><div class="n script gold" data-cfg="groomName"></div><div class="p" data-cfg="groomParentage"></div></div>
+      <div class="person"><small data-i18n="bride"></small><div class="n script gold" data-cfg="brideName"></div><div class="p" data-cfg="brideParentage"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card rv">
+      <div class="sub" data-i18n="venueTitle"></div>
+      <div class="venue fancy gold" data-cfg="venueName"></div>
+      <div class="divider"></div>
+      <p class="addr" data-cfg="venueAddress"></p>
+      <a class="btn" id="mapBtn" target="_blank" rel="noopener" data-i18n="mapsBtn"></a>
+      <div class="foot script" data-i18n="footer"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+// === EDIT WEDDING DETAILS HERE ===
+const CONFIG = {
+  initials: "G & M", // यहाँ सील के लिए छोटे अक्षर लिखें: "G & M"
+  groomName: { en: "Gauher Ali", hi: "गौहर अली", ur: "گوہر علی" }, // यहाँ दूल्हे का छोटा नाम (ऊपर हेडिंग के लिए)
+  groomParentage: { en: "S/O Asad Ali Deshmukh", hi: "पुत्र: असद अली देशमुख", ur: "ولد: اسد علی دیشمکھ" }, // यहाँ दूल्हे के पिता का नाम (नीचे सेरेमनी/डिटेल सेक्शन में)
+  brideName: { en: "Mehrosh", hi: "मेहरोश", ur: "مہروش" }, // यहाँ दुल्हन का छोटा नाम (ऊपर हेडिंग के लिए)
+  brideParentage: { en: "D/O Mohd. Sohel Akhtar", hi: "पुत्री: मो. सोहेल अख़्तर", ur: "بنت: محمد سہیل اختر" }, // यहाँ दुल्हन के पिता का नाम (नीचे सेरेमनी/डिटेल सेक्शन में)
+  weddingDateText: { en: "20 December 2026", hi: "20 दिसंबर 2026", ur: "20 دسمبر 2026" }, // स्क्रैच कार्ड की तारीख़
+  weddingDayAndTime: { en: "Sunday | After Namaz-e-Maghrib", hi: "रविवार | नमाज़-ए-मग़रिब के बाद", ur: "اتوار | نمازِ مغرب کے بعد" }, // दिन और समय
+  weddingNote: { en: "Request the honour of your gracious presence and blessings on the auspicious occasion of Nikah / Wedding.", hi: "निकाह / शादी के शुभ अवसर पर आपकी गरिमामयी उपस्थिति और दुआओं की कामना।", ur: "نکاح / شادی کے پرمسرت موقع پر آپ کی شرکت اور دعاؤں کی درخواست ہے۔" }, // न्योते का संदेश
+  countdownTargetISO: "2026-12-20T18:00:00", // काउंटडाउन तारीख़ व समय
+  venueName: { en: "S.S Lawn", hi: "एस.एस. लॉन", ur: "ایس ایس لان" }, // हॉल/लॉन का नाम
+  venueAddress: { en: "In front of FCI Godown, Akot Road, Akola", hi: "एफसीआई गोदाम के सामने, अकोट रोड, अकोला", ur: "ایف سی آئی گودام کے سامنے، اکوٹ روڈ، اکوٹ" }, // पूरा पता
+  googleMapsUrl: "https://maps.app.goo.gl/Yks4VQH31n8iGBrh9" // Google Maps की लिंक
+};
+// === END OF EDIT BLOCK ===
+
+const TRANSLATIONS = {
+  en: { tap:"Tap the seal to open your invitation", together:"With the blessings of Almighty & our families", and:"&", scratchTitle:"The Auspicious Date", scratchHint:"Scratch to reveal the date", countdownTitle:"Counting down to the big day", days:"Days", hours:"Hours", mins:"Minutes", secs:"Seconds", nikahTag:"You are cordially invited", ceremony:"Nikah / Wedding Ceremony", groom:"The Groom", bride:"The Bride", venueTitle:"Venue", mapsBtn:"Open in Google Maps", footer:"We look forward to celebrating with you", pageTitle:"Wedding Invitation" },
+  hi: { tap:"निमंत्रण खोलने के लिए सील को छुएँ", together:"ईश्वर के आशीर्वाद और परिवारजनों के साथ", and:"और", scratchTitle:"शुभ तिथि", scratchHint:"तारीख़ देखने के लिए खुरचें", countdownTitle:"बड़े दिन में शेष समय", days:"दिन", hours:"घंटे", mins:"मिनट", secs:"सेकंड", nikahTag:"आप सादर आमंत्रित हैं", ceremony:"निकाह / विवाह समारोह", groom:"दूल्हा", bride:"दुल्हन", venueTitle:"स्थान", mapsBtn:"गूगल मैप्स में खोलें", footer:"आपके साथ ख़ुशियाँ मनाने की प्रतीक्षा रहेगी", pageTitle:"विवाह निमंत्रण" },
+  ur: { tap:"دعوت نامہ کھولنے کے لیے مہر کو چھوئیں", together:"اللہ کی رحمت اور اہلِ خانہ کے ساتھ", and:"اور", scratchTitle:"مبارک تاریخ", scratchHint:"تاریخ دیکھنے کے لیے کھرچیں", countdownTitle:"خاص دن میں باقی وقت", days:"دن", hours:"گھنٹے", mins:"منٹ", secs:"سیکنڈ", nikahTag:"آپ کو دعوتِ شرکت ہے", ceremony:"نکاح / شادی کی تقریب", groom:"دولہا", bride:"دلہن", venueTitle:"مقام", mapsBtn:"گوگل میپس میں کھولیں", footer:"آپ کے ساتھ خوشیاں منانے کے منتظر ہیں", pageTitle:"دعوت نامۂ شادی" }
+};
+
+let lang = 'en';
+function render(l){
+  lang = TRANSLATIONS[l] ? l : 'en';
+  const T = TRANSLATIONS[lang];
+  const root = document.documentElement;
+  root.lang = lang;
+  root.dir = lang === 'ur' ? 'rtl' : 'ltr';
+  document.title = T.pageTitle;
+  document.querySelectorAll('[data-i18n]').forEach(e => { e.textContent = T[e.dataset.i18n] || ''; });
+  document.querySelectorAll('[data-cfg]').forEach(e => {
+    const v = CONFIG[e.dataset.cfg];
+    e.textContent = (v && typeof v === 'object') ? (v[lang] || v.en || '') : (v || '');
+  });
+  document.getElementById('mapBtn').href = CONFIG.googleMapsUrl;
+  document.querySelectorAll('.langbar button').forEach(b => b.classList.toggle('on', b.dataset.lang === lang));
+  try { localStorage.setItem('inviteLang', lang); } catch (e) {}
+}
+document.querySelectorAll('.langbar button').forEach(b => b.addEventListener('click', () => render(b.dataset.lang)));
+let saved = 'en';
+try { saved = localStorage.getItem('inviteLang') || 'en'; } catch (e) {}
+render(saved);
+
+// floating gold particles
+for (let i = 0; i < 16; i++) {
+  const p = document.createElement('i');
+  p.className = 'fp';
+  p.style.left = Math.random() * 100 + 'vw';
+  p.style.animationDuration = 8 + Math.random() * 10 + 's';
+  p.style.animationDelay = Math.random() * 8 + 's';
+  const s = 3 + Math.random() * 5; p.style.width = p.style.height = s + 'px';
+  document.body.appendChild(p);
+}
+
+// envelope open
+const env = document.getElementById('env'), intro = document.getElementById('intro');
+let opened = false;
+function openEnv(){
+  if (opened) return; opened = true;
+  env.classList.add('open');
+  const cols = ['#F5D77F','#D4AF37','#c0392b','#ffd1dc'];
+  for (let i = 0; i < 45; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.background = cols[i % cols.length];
+    p.style.animationDuration = 2.5 + Math.random() * 2.5 + 's';
+    p.style.animationDelay = Math.random() * 1 + 's';
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 6500);
+  }
+  setTimeout(() => { intro.classList.add('out'); document.body.classList.remove('locked'); window.scrollTo(0, 0); }, 1500);
+  setTimeout(() => { intro.style.display = 'none'; }, 2600);
+}
+intro.addEventListener('click', openEnv);
+
+// reveal on scroll
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }), { threshold: .15 });
+document.querySelectorAll('.rv').forEach(e => io.observe(e));
+
+// scratch card
+const box = document.getElementById('scratch'), cv = document.getElementById('foil'), ctx = cv.getContext('2d');
+let drawing = false, revealed = false, moves = 0;
+function initFoil(){
+  const r = box.getBoundingClientRect();
+  cv.width = Math.round(r.width); cv.height = Math.round(r.height);
+  const g = ctx.createLinearGradient(0, 0, cv.width, cv.height);
+  g.addColorStop(0, '#b8902a'); g.addColorStop(.3, '#F5D77F'); g.addColorStop(.55, '#D4AF37'); g.addColorStop(.8, '#F5D77F'); g.addColorStop(1, '#b8902a');
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.fillStyle = g; ctx.fillRect(0, 0, cv.width, cv.height);
+  ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.lineWidth = 1;
+  for (let x = -cv.height; x < cv.width; x += 9) { ctx.beginPath(); ctx.moveTo(x, cv.height); ctx.lineTo(x + cv.height, 0); ctx.stroke(); }
+}
+initFoil();
+function pos(e){ const r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+function scratchAt(e){
+  if (revealed) return;
+  const p = pos(e);
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.beginPath(); ctx.arc(p.x, p.y, 20, 0, 7); ctx.fill();
+  document.getElementById('hint').classList.add('gone');
+  if (++moves % 6 === 0) checkProgress();
+}
+function checkProgress(){
+  const d = ctx.getImageData(0, 0, cv.width, cv.height).data;
+  let clear = 0, total = 0;
+  for (let i = 3; i < d.length; i += 16) { total++; if (d[i] < 128) clear++; }
+  if (clear / total >= 0.5) reveal();
+}
+function reveal(){
+  if (revealed) return; revealed = true;
+  cv.classList.add('gone');
+  document.getElementById('hint').classList.add('gone');
+  document.getElementById('cd').classList.add('show');
+  document.getElementById('ctitle').classList.add('show');
+  for (let i = 0; i < 26; i++) {
+    const s = document.createElement('i'); s.className = 'spark';
+    const a = Math.random() * 6.28, dist = 50 + Math.random() * 110;
+    s.style.left = '50%'; s.style.top = '50%';
+    s.style.setProperty('--dx', Math.cos(a) * dist + 'px'); s.style.setProperty('--dy', Math.sin(a) * dist + 'px');
+    box.appendChild(s); setTimeout(() => s.remove(), 1100);
+  }
+}
+cv.addEventListener('pointerdown', e => { drawing = true; cv.setPointerCapture(e.pointerId); scratchAt(e); });
+cv.addEventListener('pointermove', e => { if (drawing) scratchAt(e); });
+['pointerup', 'pointercancel'].forEach(t => cv.addEventListener(t, () => { drawing = false; if (!revealed) checkProgress(); }));
+
+// countdown
+const target = new Date(CONFIG.countdownTargetISO).getTime();
+function tick(){
+  let diff = Math.max(0, target - Date.now());
+  const v = { d: Math.floor(diff / 864e5), h: Math.floor(diff % 864e5 / 36e5), m: Math.floor(diff % 36e5 / 6e4), s: Math.floor(diff % 6e4 / 1e3) };
+  for (const k in v) document.getElementById(k).textContent = String(v[k]).padStart(2, '0');
+}
+tick(); setInterval(tick, 1000);
+</script>
+</body>
+</html>
